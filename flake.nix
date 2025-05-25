@@ -31,21 +31,6 @@
           ".emacs.d".source = doom-emacs;
         };
 
-        home.activation = {
-          doomSync = config.lib.dag.entryAfter ["writeBoundary"] ''
-            if [ ! -f "$HOME/.emacs.d/bin/doom" ]; then
-              echo "Doom Emacs not found, skipping sync"
-              exit 0
-            fi
-            
-            export PATH="${config.programs.emacs.package}/bin:$PATH"
-            export EMACSDIR="$HOME/.emacs.d"
-            export DOOMDIR="$HOME/.doom.d"
-            
-            $DRY_RUN_CMD "${config.programs.emacs.package}/bin/emacs" --batch --eval "(load \"$HOME/.emacs.d/bin/doom\")" -- install --force
-            $DRY_RUN_CMD "${config.programs.emacs.package}/bin/emacs" --batch --eval "(load \"$HOME/.emacs.d/bin/doom\")" -- sync
-          '';
-        };
       };
     };
 }
