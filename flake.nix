@@ -39,8 +39,14 @@
             fi
             
             export PATH="${config.programs.emacs.package}/bin:$PATH"
-            $DRY_RUN_CMD $HOME/.emacs.d/bin/doom install --force
-            $DRY_RUN_CMD $HOME/.emacs.d/bin/doom sync
+            export EMACSDIR="$HOME/.emacs.d"
+            export DOOMDIR="$HOME/.doom.d"
+            
+            # Make doom executable
+            chmod +x "$HOME/.emacs.d/bin/doom"
+            
+            $DRY_RUN_CMD "$HOME/.emacs.d/bin/doom" install --force
+            $DRY_RUN_CMD "$HOME/.emacs.d/bin/doom" sync
           '';
         };
       };
