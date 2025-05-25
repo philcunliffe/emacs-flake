@@ -38,6 +38,7 @@
               exit 0
             fi
             
+            export PATH="${config.programs.emacs.package}/bin:$PATH"
             $DRY_RUN_CMD $HOME/.emacs.d/bin/doom install --force
             $DRY_RUN_CMD $HOME/.emacs.d/bin/doom sync
           '';
