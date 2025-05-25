@@ -28,7 +28,18 @@
           ".doom.d/config.el".source = "${self}/config.el";
           ".doom.d/init.el".source = "${self}/init.el";
           ".doom.d/packages.el".source = "${self}/packages.el";
-          ".emacs.d".source = doom-emacs;
+        };
+
+        home.activation = {
+          setupDoomEmacs = config.lib.dag.entryAfter ["writeBoundary"] ''
+            # Copy doom-emacs to a writable location
+            if [ ! -d "$HOME/.emacs.d" ]; then
+              echo "Setting up Doom Emacs in writable directory..."
+              $DRY_RUN_CMD cp -r "${doom-emacs}" "$HOME/.emacs.d"
+              $DRY_RUN_CMD chmod -R u+w "$HOME/.emacs.d"
+              $DRY_RUN_CMD chmod +x "$HOME/.emacs.d/bin/doom"
+            fi
+          '';
         };
 
       };
